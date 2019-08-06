@@ -1,28 +1,35 @@
-# The directory Mix will write compiled artifacts to.
-/_build/
+# phpstorm project files
+.idea
 
-# If you run "mix test --cover", coverage assets end up here.
-/cover/
+# netbeans project files
+nbproject
 
-# The directory Mix downloads your dependencies sources to.
-/deps/
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
 
-# Where 3rd-party dependencies like ExDoc output generated docs.
-/doc/
+# windows thumbnail cache
+Thumbs.db
 
-# Ignore .fetch files in case you like to edit your project deps locally.
-/.fetch
+# composer vendor dir
+/vendor
 
-# If the VM crashes, it generates a dump, let's ignore it too.
-erl_crash.dump
+# composer itself is not needed
+composer.phar
 
-# Also ignore archive artifacts (built via "mix archive.build").
-*.ez
+# Mac DS_Store Files
+.DS_Store
 
-# Ignore package tarball (built via "mix hex.build").
-doujor_api-*.tar
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
 
-# Since we are building assets from assets/,
-# we ignore priv/static. You may want to comment
-# this depending on your deployment strategy.
-/priv/static/
+tests/_output/*
+tests/_support/_generated
+
+#vagrant folder
+/.vagrant
+
+/runner.sh

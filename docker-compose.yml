@@ -1,0 +1,68 @@
+version: '3.5'
+services:
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - .:/var/www
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      MYSQL_DATABASE: growie_api_dev
+      MYSQL_USER: growie_admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PORT: 3306
+      MYSQL_TEST_DATABASE: growie_api_test
+      MYSQL_HOST: database
+      PHP_EXTENSION_XDEBUG: 1
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      MYSQL_DATABASE: growie_api_dev
+      MYSQL_USER: growie_admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PORT: 3306
+      MYSQL_TEST_DATABASE: growie_api_test
+      MYSQL_HOST: database
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+  database:
+    container_name: database
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: growie_api_dev
+      MYSQL_USER: growie_admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PORT: 3306
+      MYSQL_TEST_DATABASE: growie_api_test
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+volumes:
+  mysql-data:
+  deps:
+  build:
