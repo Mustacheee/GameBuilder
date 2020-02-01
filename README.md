@@ -38,16 +38,16 @@ REQUIREMENTS
 ------------
 
 * PHP 7.1
-* Docker
-* Composer
+* [Docker](https://docs.docker.com/)
+* [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 
 
 INSTALLATION
 ------------
 * Clone the Repo
 * run `composer install`
-* run `docker-mahine start` if your docker machine is asleepin'
-* run `eval $(docker-machine ev)`
+* run `docker-machine start` if your docker machine is asleepin'
+* run `eval $(docker-machine env)`
 * run `docker-compose up -d`
 * Check to make sure all containers are running
 * run `chmod +x ./yii`
