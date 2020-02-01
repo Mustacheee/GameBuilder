@@ -38,7 +38,12 @@ class SiteController extends ActiveController
      */
     public function actions()
     {
-        return ['signup', 'contact-us', 'error'];
+        return ['signup', 'contact-us', 'error', 'index'];
+    }
+
+    public function actionIndex()
+    {
+        return $this->returnSuccess();
     }
 
     /**
