@@ -1,0 +1,48 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+info:
+  description: Growie API
+  version: "1.0.0"
+  title: Growie API
+  contact:
+    email: growiedev@gmail.com
+tags:
+  - name: Site
+    description: SiteController routes
+paths:
+  /contact-us:
+    post:
+      tags:
+        - Site
+      summary: Sends a ContactForm request
+      operationId: siteControllerActionContactUs
+      description: Given an email, name, and comment, send an email to Growie Developers
+      responses:
+        '200':
+          description: Contact created
+        '400':
+          description: Form Validation Errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactForm'
+        description: Send a question or comment to Growie
+components:
+  schemas:
+    ContactForm:
+      type: object
+      required:
+        - name
+        - email
+        - comment
+      properties:
+        name:
+          type: string
+          example: Bruce Lil Wayne
+        email:
+          type: string
+          example: 'your_email@gmail.com'
+        comment:
+          type: string
+          example: I would like to see a dark mode on your site!

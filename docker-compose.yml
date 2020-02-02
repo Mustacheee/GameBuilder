@@ -15,7 +15,7 @@ services:
       MYSQL_TEST_DATABASE: growie_api_test
       MYSQL_HOST: database
       PHP_EXTENSION_XDEBUG: 1
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      SENDGRID_API_KEY: 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
   nginx:
     build:
       context: ./docker/nginx
@@ -37,7 +37,7 @@ services:
       MYSQL_PORT: 3306
       MYSQL_TEST_DATABASE: growie_api_test
       MYSQL_HOST: database
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      SENDGRID_API_KEY: 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
   database:
     container_name: database
     image: mysql:5.7

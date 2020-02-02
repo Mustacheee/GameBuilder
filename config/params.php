@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'adminEmail' => 'growie@growie.com',
+    'adminEmail' => 'growiedev@gmail.com',
     'accessTokenOffset' => 86400,
 ];
