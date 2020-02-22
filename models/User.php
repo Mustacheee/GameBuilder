@@ -139,7 +139,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $email
      * @return User|null
      */
-    public static function findByUsername($email)
+    public static function findByEmail($email)
     {
         $user = self::find()
             ->andWhere(['email' => $email, 'status' => self::STATUS_ACTIVE])

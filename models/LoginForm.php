@@ -146,8 +146,8 @@ class LoginForm extends ActiveRecord
      */
     public function getUser()
     {
-        if (!$this->user) {
-            $this->user = User::findByEmail($this->email);
+        if (!$this->_user) {
+            $this->_user = User::findByEmail($this->email);
         }
 
         return $this->_user;
