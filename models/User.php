@@ -19,7 +19,6 @@ use yii\web\IdentityInterface;
  * @property string $last_name
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $username
  * @property string $verification_token
 
  * @property integer $status
@@ -70,11 +69,6 @@ class User extends ActiveRecord implements IdentityInterface
             ['description', 'string'],
 
 //            ['birthdate', 'validateBirthdate'],
-
-//            ['username', 'required'],
-//            ['username', 'string', 'max' => 15, 'min' => 4],
-//            ['username', 'trim', 'skipOnEmpty' => true],
-//            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
         ];
     }
 
@@ -140,20 +134,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by email
      *
-     * @param string $username
+     * @param string $email
      * @return User|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername($email)
     {
         $user = self::find()
-            ->andWhere([
-                'OR',
-                ['username' => $username],
-                ['email' => $username]
-            ])
-            ->andWhere(['status' => self::STATUS_ACTIVE])
+            ->andWhere(['email' => $email, 'status' => self::STATUS_ACTIVE])
             ->one();
 
         /** @var User|null $user */

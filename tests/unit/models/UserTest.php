@@ -22,12 +22,6 @@ class UserTest extends \Codeception\Test\Unit
 //        expect_not(User::findIdentityByAccessToken('non-existing'));
     }
 
-    public function testFindUserByUsername()
-    {
-//        expect_that($user = User::findByUsername('admin'));
-//        expect_not(User::findByUsername('not-admin'));
-    }
-
     /**
      * @depends testFindUserByUsername
      */

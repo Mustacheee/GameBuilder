@@ -44,7 +44,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: growie_api_dev
-      MYSQL_USER: growie_admin
+      MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
       MYSQL_PORT: 3306
