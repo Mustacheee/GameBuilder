@@ -35,7 +35,7 @@ class JWTAuthTokenGenerator implements AuthTokenGeneratorInterface
             ->setIssuedAt($now)
             ->set(self::FIELD_USER_ID, $accessToken->user_id)
             ->set(self::FIELD_ACCESS_TOKEN, $accessToken->token)
-            ->sign(new Sha256(), 'secret')
+            ->sign(new Sha256(), Yii::$app->jwt->key)
             ->getToken();
 
         return new JWTAccessToken((string) $token);

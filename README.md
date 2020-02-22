@@ -53,7 +53,6 @@ INSTALLATION
 * run `chmod +x ./yii`
 * run `chmod +x ./toolbox.sh`
 * run `./toolbox.sh yii migrate`
-* It should print out a command, type that into the console (will fix this later, fucking windows)
 * You should be able to make a POST request to `http://192.168.99.199/signup` (note: your base url may be different)
 * Note: You may need to create the `./runtime/cache` directory if you get a punk ass exception error when making the request
 * Once you have a user, you can make a POST request to `http://192.168.99.100/login` to login and retrieve a token
@@ -105,85 +104,44 @@ tests are for testing user interaction. Acceptance tests are disabled by default
 they perform testing in real browser. 
 
 
-### Running  acceptance tests
+### Test Setup
 
 To execute acceptance tests do the following:  
 
-1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
+1. Make sure you have the latest packages installed with `composer install`
+2. `chmod +x tests/bin/yii` (First time only if needed)
 
-2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full featured
-   version of Codeception
+3. Login as root and create the test database if it does not yet exist
+* Option 1: CLI (TODO)
+* Option 2: Adminer
+    - Navigate to Adminer
+    - Login with `root` and `password`
+    - Click `SQL Command`
+    - Enter `CREATE DATABASE growie_api_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
 
-3. Update dependencies with Composer 
 
-    ```
-    composer update  
-    ```
-
-4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
-
-    ```
-    java -jar ~/selenium-server-standalone-x.xx.x.jar
-    ```
-
-    In case of using Selenium Server 3.0 with Firefox browser since v48 or Google Chrome since v53 you must download [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and launch Selenium with it:
-
-    ```
-    # for Firefox
-    java -jar -Dwebdriver.gecko.driver=~/geckodriver ~/selenium-server-standalone-3.xx.x.jar
-    
-    # for Google Chrome
-    java -jar -Dwebdriver.chrome.driver=~/chromedriver ~/selenium-server-standalone-3.xx.x.jar
-    ``` 
-    
-    As an alternative way you can use already configured Docker container with older versions of Selenium and Firefox:
-    
-    ```
-    docker run --net=host selenium/standalone-firefox:2.53.0
-    ```
-
-5. (Optional) Create `yii2_basic_tests` database and update it by applying migrations if you have them.
-
-   ```
-   tests/bin/yii migrate
-   ```
-
+### Running Tests
+1. Make sure migrations are up to date with `./toolbox.sh yii-test migrate`
    The database configuration can be found at `config/test_db.php`.
 
-
-6. Start web server:
-
-    ```
-    tests/bin/yii serve
-    ```
-
-7. Now you can run all available tests
-
-   ```
-   # run all available tests
-   vendor/bin/codecept run
-
-   # run acceptance tests
-   vendor/bin/codecept run acceptance
-
-   # run only unit and functional tests
-   vendor/bin/codecept run unit,functional
-   ```
-
+2. Codeception can be used with the toolbox:  
+    * `./toolbox.sh codecept run`
+    * `./toolbox.sh codecept unit-tests`
+    * `./toolbox.sh coverage` 
 ### Code coverage support
 
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
-
 ```
+# shorthand
+./toolbox.sh coverage
+
 #collect coverage for all tests
-vendor/bin/codecept run -- --coverage-html --coverage-xml
+./toolbox.sh codecept run -- --coverage-html --coverage-xml
 
 #collect coverage only for unit tests
-vendor/bin/codecept run unit -- --coverage-html --coverage-xml
+./toolbox.sh codecept run unit -- --coverage-html --coverage-xml
 
 #collect coverage for unit and functional tests
-vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
+./toolbox.sh codecept run functional,unit -- --coverage-html --coverage-xml
 ```
 
 You can see code coverage output under the `tests/_output` directory.

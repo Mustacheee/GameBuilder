@@ -73,10 +73,8 @@ class SiteController extends ActiveController
     public function actionSignup()
     {
         $signupForm = new SignupForm();
-        $signupForm->load(['SignupForm' => Yii::$app->request->post()]);
-
-        if ($signupForm->upsertUser()) {
-            return $this->returnSuccess(['data' => $signupForm->getUserAttributes()]);
+        if ($signupForm->signupUser(Yii::$app->request->post())) {
+            return $this->returnSuccess();
         }
         return $this->returnError($signupForm->errors);
     }

@@ -21,43 +21,56 @@ use yii\db\ActiveRecord;
  */
 class LoginForm extends ActiveRecord
 {
+    /** @var string $username */
     public $username;
+
+    /** @var string $password */
     public $password;
+
+    /** @var AuthTokenGeneratorInterface $_authTokenGenerator */
+    protected $_authTokenGenerator;
 
     /** @var AccessTokenInterface */
     private $accessToken;
 
-    /** @var AuthTokenGeneratorInterface $authTokenGenerator */
-    protected $authTokenGenerator;
-
+    /** @var User|bool $_user*/
     private $_user = false;
 
+    /**
+     * Make sure defaults to dependencies are met
+     */
     public function init()
     {
         parent::init();
-        $this->authTokenGenerator = $this->authTokenGenerator ?? new JWTAuthTokenGenerator();
-    }
-
-    public function beforeValidate()
-    {
+        $this->_authTokenGenerator = $this->_authTokenGenerator ?? new JWTAuthTokenGenerator();
         $this->ip_address = Yii::$app->request->getUserIP();
-        $user = $this->getUser();
-        if ($user instanceof User) {
-            $this->user_id = $user->id;
-        }
-        return parent::beforeValidate();
     }
 
+    /**
+     * After recording our login, create an access token for the user.
+     *
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
     public function afterSave($insert, $changedAttributes)
     {
-        /** @var AccessTokenInterface $token */
-        $user = $this->getUser(); // TODOOOOO TODO: Refresh access token logic
+        $this->accessToken = $this->generateAccessToken();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * Generate an auth key and a corresponding access token for our now-logged in user.
+     *
+     * @return AccessTokenInterface
+     */
+    private function generateAccessToken(): AccessTokenInterface
+    {
+        $user = $this->getUser();
         $user->generateAuthKey();
         $user->save(false);
 
         $accessToken = AccessToken::generateNewAccessToken($user);
-        $this->accessToken = $this->authTokenGenerator->generateToken($accessToken);
-        parent::afterSave($insert, $changedAttributes);
+        return $this->_authTokenGenerator->generateToken($accessToken);
     }
 
     /**
@@ -74,19 +87,26 @@ class LoginForm extends ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'user_id', 'ip_address'], 'required'],
-            ['password', 'validatePassword'],
+            ['username', 'string'],
+            ['password', 'string'],
 
-//            ['username', 'string'],
-//
-//            ['password', 'string'],
-//
-//            ['user_id', 'int'],
-//            //TODO:: Finish writing rules
-//            ['access_token', 'string'],
-//
-//            ['ip_address', 'string']
+            [['username', 'password'], 'required'],
+            ['password', 'validatePassword'],
         ];
+    }
+
+    /**
+     * Load our params and attempt to login.
+     *
+     * @param array $params
+     * @return bool
+     */
+    public function login(array $params = [])
+    {
+        if (!empty($params)) {
+            $this->load($params, '');
+        }
+        return $this->save();
     }
 
     /**
@@ -101,10 +121,22 @@ class LoginForm extends ActiveRecord
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user instanceof User || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
+                return;
             }
+            $this->user_id = $user->id;
         }
+    }
+
+    /**
+     * Get our access token to be used by the user logging in.
+     *
+     * @return AccessTokenInterface
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
     }
 
     /**
@@ -121,8 +153,13 @@ class LoginForm extends ActiveRecord
         return $this->_user;
     }
 
-    public function getAccessToken()
+    /**
+     * Set our Authentication Token Generator
+     *
+     * @param AuthTokenGeneratorInterface $authTokenGenerator
+     */
+    public function setAuthTokenGenerator(AuthTokenGeneratorInterface $authTokenGenerator)
     {
-        return $this->accessToken;
+        $this->_authTokenGenerator = $authTokenGenerator;
     }
 }

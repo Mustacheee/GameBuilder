@@ -36,7 +36,7 @@ class LoginController extends ActiveController
     public function actionLogin()
     {
         $model = new LoginForm();
-        if ($model->load(['LoginForm' => Yii::$app->request->post()]) && $model->save()) {
+        if ($model->login(Yii::$app->request->post())) {
             return $this->returnSuccess(['access_token' => $model->getAccessToken()->toString()]);
         }
 

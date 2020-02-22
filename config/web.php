@@ -63,7 +63,7 @@ $config = [
         ],
         'jwt' => [
             'class' => 'sizeg\jwt\Jwt',
-            'key' => 'secret',
+            'key' => 'secret', #TODO:: Change this
         ],
         'accessTokenGenerator' => [
             'class' => JWTAuthTokenGenerator::class

@@ -37,6 +37,10 @@ return [
             ],
             */
         ],
+        'jwt' => [
+            'class' => 'sizeg\jwt\Jwt',
+            'key' => 'secret',
+        ],
     ],
     'params' => $params,
 ];

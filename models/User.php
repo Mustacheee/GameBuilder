@@ -21,7 +21,6 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $username
  * @property string $verification_token
- * @property integer $role_id
 
  * @property integer $status
  * @property integer $created_at
@@ -50,37 +49,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function rules()
     {
-        return array_merge($this->getSignupRules(), [
-//            ['birthdate', 'validateBirthdate'],
-
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-
-            ['role_id', 'number'],
-            ['description', 'string'],
-
-//            ['username', 'required'],
-//            ['username', 'string', 'max' => 15, 'min' => 4],
-//            ['username', 'trim', 'skipOnEmpty' => true],
-//            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
-        ]);
-    }
-
-    public function scenarios()
-    {
-        return array_merge(parent::scenarios(), [
-            self::SCENARIO_SIGNUP => ['email', 'first_name', 'last_name']
-        ]);
-    }
-
-    public function getSignupRules()
-    {
         return [
             ['email', 'required'],
             ['email', 'string', 'max' => 254],
             ['email', 'trim', 'skipOnEmpty' => true],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email'],
+            ['email', 'unique', 'targetAttribute' => 'email'],
 
             ['first_name', 'required'],
             ['first_name', 'string', 'max' => 32],
@@ -89,7 +63,26 @@ class User extends ActiveRecord implements IdentityInterface
             ['last_name', 'required'],
             ['last_name', 'string', 'max' => 32],
             ['last_name', 'trim', 'skipOnEmpty' => true],
+
+            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+
+            ['description', 'string'],
+
+//            ['birthdate', 'validateBirthdate'],
+
+//            ['username', 'required'],
+//            ['username', 'string', 'max' => 15, 'min' => 4],
+//            ['username', 'trim', 'skipOnEmpty' => true],
+//            ['username', 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
         ];
+    }
+
+    public function scenarios()
+    {
+        return array_merge(parent::scenarios(), [
+            self::SCENARIO_SIGNUP => ['email', 'first_name', 'last_name']
+        ]);
     }
 
     /**
@@ -135,7 +128,6 @@ class User extends ActiveRecord implements IdentityInterface
                 'id' => $token->getUserId(),
                 'status' => self::STATUS_ACTIVE
             ])
-            ->with('role')
             ->one();
 
         if (!$user instanceof self) {

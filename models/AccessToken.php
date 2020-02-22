@@ -27,6 +27,12 @@ class AccessToken extends ActiveRecord
         return '{{%access_tokens}}';
     }
 
+    /**
+     * Given a user, create a token that can be used to access their account.
+     *
+     * @param User|null $user
+     * @return AccessToken
+     */
     public static function generateNewAccessToken(?User $user)
     {
         $accessToken = new self([
