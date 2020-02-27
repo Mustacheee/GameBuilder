@@ -11,7 +11,7 @@ class LoginFormTest extends \Codeception\Test\Unit
 {
     private $model;
 
-    private const DEFAULT_ERROR = 'Incorrect username or password.';
+    private const DEFAULT_ERROR = 'Incorrect email or password.';
 
     protected function _after()
     {
@@ -29,14 +29,14 @@ class LoginFormTest extends \Codeception\Test\Unit
         $this->model = new LoginForm(['authTokenGenerator' => $generator]);
 
         expect_not($this->model->login());
-        expect($this->model->errors)->hasKey('username');
+        expect($this->model->errors)->hasKey('email');
         expect($this->model->errors)->hasKey('password');
-        $this->assertContains('cannot be blank', $this->model->errors['username'][0]);
+        $this->assertContains('cannot be blank', $this->model->errors['email'][0]);
         $this->assertContains('cannot be blank', $this->model->errors['password'][0]);
     }
 
     /**
-     * Logging in with a non-existent username should return expected error.
+     * Logging in with a non-existent email should return expected error.
      *
      * @throws \Exception
      */
@@ -45,7 +45,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         $generator = $this->make(JWTAuthTokenGenerator::class);
 
         $this->model = new LoginForm([
-            'username' => 'not_existing_username',
+            'email' => 'not_existing_email',
             'password' => 'not_existing_password',
             'authTokenGenerator' => $generator
         ]);
@@ -56,7 +56,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     }
 
     /**
-     * Attempting to login with a correct username, but incorrect password, displays
+     * Attempting to login with a correct email, but incorrect password, displays
      * the same vague error message.
      *
      * @throws \Exception
@@ -69,7 +69,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         $generator = $this->make(JWTAuthTokenGenerator::class);
 
         $this->model = new LoginForm([
-            'username' => $user->email,
+            'email' => $user->email,
             'password' => 'wrong_password',
             'authTokenGenerator' => $generator,
         ]);
@@ -97,7 +97,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         $this->model = new LoginForm(['authTokenGenerator' => $generator]);
 
         expect_that($this->model->login([
-            'username' => $user->email,
+            'email' => $user->email,
             'password' => $password,
         ]));
 

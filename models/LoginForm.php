@@ -21,8 +21,8 @@ use yii\db\ActiveRecord;
  */
 class LoginForm extends ActiveRecord
 {
-    /** @var string $username */
-    public $username;
+    /** @var string $email */
+    public $email;
 
     /** @var string $password */
     public $password;
@@ -87,10 +87,10 @@ class LoginForm extends ActiveRecord
     public function rules()
     {
         return [
-            ['username', 'string'],
+            ['email', 'string'],
             ['password', 'string'],
 
-            [['username', 'password'], 'required'],
+            [['email', 'password'], 'required'],
             ['password', 'validatePassword'],
         ];
     }
@@ -122,7 +122,7 @@ class LoginForm extends ActiveRecord
             $user = $this->getUser();
 
             if (!$user instanceof User || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Incorrect email or password.');
                 return;
             }
             $this->user_id = $user->id;
@@ -140,14 +140,14 @@ class LoginForm extends ActiveRecord
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds user by [[email]]
      *
      * @return User|null
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+        if (!$this->_user) {
+            $this->_user = User::findByEmail($this->email);
         }
 
         return $this->_user;

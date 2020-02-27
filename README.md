@@ -118,6 +118,7 @@ To execute acceptance tests do the following:
     - Login with `root` and `password`
     - Click `SQL Command`
     - Enter `CREATE DATABASE growie_api_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+    - When that successfully runs, enter `GRANT ALL PRIVILEGES ON growie_api_test.* to 'growie_admin'@'%'`
 
 
 ### Running Tests
