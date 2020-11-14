@@ -5,7 +5,7 @@
 codecept() {
   local CONTAINER="$(docker ps | grep fpm | awk '{print $1}')"
   local COMMAND=$@
-  docker exec -i $CONTAINER bash -c "cd ../ && ./vendor/bin/codecept $COMMAND"
+  docker exec -i $CONTAINER bash -c "./vendor/bin/codecept $COMMAND"
 }
 
 # Run code coverage on the application
@@ -41,7 +41,7 @@ unit-tests() {
 yii () {
   local CONTAINER="$(docker ps | grep fpm | awk '{print $1}')"
   local COMMAND=$@
-  docker exec -it $CONTAINER php .././yii $COMMAND
+  docker exec -it $CONTAINER php ./yii $COMMAND
 }
 
 # Interact with the test environments yii script file
@@ -49,7 +49,7 @@ yii () {
 yii-test() {
   local CONTAINER="$(docker ps | grep fpm | awk '{print $1}')"
   local COMMAND=$@
-  docker exec -it $CONTAINER php ../tests/bin/yii $COMMAND
+  docker exec -it $CONTAINER php ./tests/bin/yii $COMMAND
 }
 
 

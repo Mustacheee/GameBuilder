@@ -6,7 +6,6 @@ RUN apt-get update && \
 
 # Setup debugging
 ENV PHP_EXTENSION_XDEBUG 1
-#COPY ./docker/php-fpm/php.ini /usr/local/etc/php/php.ini
 RUN yes | pecl install xdebug
 RUN docker-php-ext-install pdo pdo_mysql
 

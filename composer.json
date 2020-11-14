@@ -1,8 +1,8 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "mustacheee/apitemplate",
+    "description": "Rest API Base Template",
+    "keywords": ["Rest API", "Yii2"],
+    "homepage": "https://github.com/Mustacheee/ApiTemplate",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
@@ -14,25 +14,24 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.1.0",
-        "yiisoft/yii2": "~2.0.14",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-authclient": "~2.1.0",
         "ext-json": "*",
-        "sizeg/yii2-jwt": "dev-master",
+        "php": ">=7.4.0",
         "sendgrid/sendgrid": "~7",
+        "sizeg/yii2-jwt": "dev-master",
         "yii2mod/yii2-swagger": "*",
-        "yiisoft/yii2-apidoc": "^2.1.0"
+        "yiisoft/yii2": "~2.0.38",
+        "yiisoft/yii2-apidoc": "^2.1.0",
+        "yiisoft/yii2-authclient": "~2.1.0",
+        "yiisoft/yii2-bootstrap": "~2.0.0"
     },
     "require-dev": {
-        "yiisoft/yii2-debug": "~2.1.0",
-        "yiisoft/yii2-gii": "~2.1.0",
-        "yiisoft/yii2-faker": "~2.0.0",
-
         "codeception/base": "~2.3.0",
-        "codeception/verify": "~0.4.0",
         "codeception/specify": "~0.4.6",
-        "symfony/browser-kit": ">=2.7 <=4.2.4"
+        "codeception/verify": "~0.4.0",
+        "symfony/browser-kit": ">=2.7 <=4.2.4",
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.1.0"
     },
     "config": {
         "process-timeout": 1800,

@@ -12,6 +12,7 @@ services:
     volumes:
       - .:/var/www
       - ./vendor:/var/www/vendor
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
     environment:
       DATABASE_HOST: database
       DATABASE_NAME: $DATABASE_NAME
