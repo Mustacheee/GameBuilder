@@ -20,7 +20,6 @@ features to your application.
 DIRECTORY STRUCTURE
 -------------------
 
-      assets/             contains assets definition
       commands/           contains console commands (controllers)
       config/             contains application configurations
       controllers/        contains Web controller classes

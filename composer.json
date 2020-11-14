@@ -54,7 +54,6 @@
             "setPermission": [
                 {
                     "runtime": "0775",
-                    "web/assets": "0775",
                     "yii": "0755"
                 }
             ]

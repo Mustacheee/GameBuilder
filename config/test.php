@@ -18,9 +18,6 @@ return [
         'mailer' => [
             'useFileTransport' => true,
         ],
-        'assetManager' => [
-            'basePath' => __DIR__ . '/../web/assets',
-        ],
         'urlManager' => [
             'showScriptName' => true,
         ],
