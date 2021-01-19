@@ -34,14 +34,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      DATABASE_HOST: database
-      DATABASE_NAME: $DATABASE_NAME
-      DATABASE_PASSWORD: $DATABASE_PASSWORD
-      DATABASE_PORT: $DATABASE_PORT
-      DATABASE_TEST_NAME: $DATABASE_TEST_NAME
-      DATABASE_USER: $DATABASE_USER
-      SENDGRID_API_KEY: $SENDGRID_API_KEY
   database:
     container_name: database
     image: mysql:5.7
