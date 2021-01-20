@@ -8,6 +8,7 @@ RUN apt-get update && \
 ENV PHP_EXTENSION_XDEBUG 1
 RUN yes | pecl install xdebug
 RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-enable xdebug
 
 # Install dependencies
 RUN apt-get install -y git zip unzip
@@ -23,7 +24,7 @@ COPY composer.lock composer.lock
 RUN composer install
 
 # Expose port
-EXPOSE 9000
+#EXPOSE 9000
 
 # Begin FPM service
 CMD ["php-fpm"]

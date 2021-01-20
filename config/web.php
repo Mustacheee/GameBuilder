@@ -56,7 +56,7 @@ $config = [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'pluralize' => false,
-                    'controller' => ['user', 'review']
+                    'controller' => ['user']
                 ],
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
             ],

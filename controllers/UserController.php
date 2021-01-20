@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\Follower;
-use app\models\Review;
 use app\models\User;
 use app\traits\ResponseTrait;
 use Yii;
@@ -54,11 +53,9 @@ class UserController extends AuthenticatedRestController
                 'first_name' => 'u.first_name',
                 'last_name' => 'u.last_name',
                 'description' => 'u.description',
-                'review_count' => new Expression('COUNT(DISTINCT r.id)'),
                 'follower_count' => new Expression('COUNT(f.id)'),
             ])
             ->from(['u' => User::tableName()])
-            ->leftJoin(['r' => Review::tableName()], 'r.user_id = u.id')
             ->leftJoin(['f' => Follower::tableName()], 'f.followed_id = u.id')
             ->groupBy(['u.id'])
             ->andWhere(['u.id' => $id])
